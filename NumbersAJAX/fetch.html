@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        #fact{
+            display: none;
+        }
+
+        #opBox{
+            display: none;
+        }
+
+    </style>
+    <title>Fetch Number Facts</title>
+</head>
+<body class="bg-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 mx-auto">
+                <div class="card bg-primary text-white mt-5 p-4">
+                    <h1>Number Facts</h1>
+                    <p>Enter a number and get a fact</p>
+                    <input type="number" class="form-control form-control-lg" id="numberInput" placeholder="Enter any number...">
+                    <div id="fact" class="card-body">
+                        <h4 class="card-title">Number Fact</h4>
+                        <p id="factText" class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="year" style="background-color: blueviolet; width: 83%; margin: 30px 10px 30px 95px; padding: 30px; color: white; border-radius: 5px;" >
+            <h1>Day Fact</h1>
+            <p>Enter a date to get date fact</p>
+            <input id="dateInput" type="number" style="border-radius: 5px; border-width: 0; padding: 10px; width: 100%;" placeholder="Enter day number eg:365">
+            <div id="opBox" style="margin: 15px 0 0 0;">
+                <h4>Date Fact</h4>
+                <p id="Op"></p>
+            </div>
+        </div>
+    </div>
+
+<script>
+    let fact = document.querySelector('#fact');
+    let factText = document.querySelector('#factText');
+
+
+    let numberInput = document.querySelector('#numberInput');
+    numberInput.addEventListener('input', getFactFetch);
+
+    function getFactFetch(){
+        let number = numberInput.value;
+
+        fetch('http://numbersapi.com/'+number)
+        .then(res => res.text())
+        .then(data => {
+            if(number != ''){
+               fact.style.display = 'block';
+               factText.innerText = data;
+            }
+        })
+        .catch(err => console.log(err))
+
+    }
+
+    let ip = document.querySelector('#dateInput');
+    let op = document.querySelector('#Op');
+    let opBox = document.querySelector('#opBox');
+
+    ip.addEventListener('input', getDateFact);
+    function getDateFact(){
+        let d = ip.value;
+
+        fetch('http://numbersapi.com/'+d+'/date')
+        .then(res => res.text())
+        .then(data => {
+           if(d != ''){
+               opBox.style.display = 'block';
+               op.innerText = data;
+           }
+          
+        })
+        .catch(err => console.log(err))
+    }
+    
+    
+    
+
+</script>
+
+</body>
+</html>
